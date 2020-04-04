@@ -1,0 +1,4 @@
+50MB en_decode for 50 times by ECB costs 43438.92276287079ms
+50MB en_decode for 50 times by CBC costs 43812.83402442932ms
+50MB en_decode for 50 times by CFB costs 374264.91618156433ms
+50MB en_decode for 50 times by OFB costs 377226.3562679291ms
