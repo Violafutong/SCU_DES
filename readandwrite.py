@@ -1,8 +1,12 @@
 import os
 import ctf
+import argparse
 #明文路径\密钥路径\初始向量路径
-def read():
-    paths = ["des_plain.txt","des_key.txt","des_iv.txt"]
+def read(args):
+    paths = []
+    paths.append(args.plain)
+    paths.append(args.key)
+    paths.append(args.iv)
     context = []
     temp  = []
     for path in paths:
@@ -15,6 +19,7 @@ def read():
                 string = '0'+string
         temp.append(string)
     return temp
+
 def write():
     path = "des_ Cipher.txt"
     with open(path,'w') as f:
@@ -25,7 +30,18 @@ def read_data(filename):
     with open(filename,'b') as f:
         string = f.reand()
     return string
-    
+
+def input_settings():
+    parse = argparse.ArgumentParser()
+    parse.add_argument("-p",type = str ,dest='plain',help= "- p plain.txt default des_plain.txt",default="des_plain.txt")
+    parse.add_argument("-k", type = str ,dest= 'key', help = "-k key.txt default des_key.txt", default="des_key.txt")
+    parse.add_argument("-v",type = str ,dest= 'iv', help= "- v iv.txt default des_plain.txt",default="des_iv.txt")
+    parse.add_argument("-m", type = str , dest='mode',help = "-m mode yoeu want to encode default ECB", default="all")
+    parse.add_argument("-c", type = str , dest = 'cipher',help = "-c where you want to store the secrect", default="des_Cipher.txt")
+    args = parse.parse_args()
+    return args
+
 if __name__ == "__main__":
-    read()
+    args = input_settings()
+    read(args)
 

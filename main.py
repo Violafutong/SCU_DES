@@ -3,6 +3,7 @@ import time
 import des#des parts
 import readandwrite as rw#read files
 import ctf #数据模块
+import argparse
 
 #DES算法主题
 def DES(plain,key,flag=1):
@@ -119,32 +120,59 @@ def OFB(string,key,iv):
         start+=8
     return cipher
 
-def show():
-    plain,key,iv = rw.read()
-    ecb_cipher = ECB(plain,key)
-    ecb_plain = ECB(ecb_cipher,key,0) 
-    cbc_cipher = CBC(plain,key,iv)
-    cbc_plain = de_CBC(cbc_cipher,key,iv)
-    cfb_cipher = CFB(plain,key,iv)
-    cfb_plain =  CFB(cfb_cipher,key,iv)  
-    ofb_cipher=OFB(plain,key,iv)
-    ofb_plain=OFB(ofb_cipher,key,iv)
-    print("ecb_cipher is",hex(int(ecb_cipher,base=2)).upper())
-    ctf.words.append("ecb_cipher is"+str(hex(int(ecb_cipher,base=2)).upper())+"\n")
-    print("ecb_plain  is",hex(int(ecb_plain,base=2)).upper())
-    print("cbc_cipher is",hex(int(cbc_cipher,base=2)).upper())
-    ctf.words.append("cbc_cipher is"+str(hex(int(cbc_cipher,base=2)).upper())+"\n")
-    print("cbc_plain is",hex(int(cbc_plain,base=2)).upper())
-    print("cfb_cipher is",hex(int(cfb_cipher,base=2)).upper())
-    ctf.words.append("cfb_cipher is"+str(hex(int(cfb_cipher,base=2)).upper())+"\n")
-    print("cfb_plain is",hex(int(cfb_plain,base=2)).upper())
-    print("ofb_cipher is",hex(int(ofb_cipher,base=2)).upper())
-    ctf.words.append("ofb_cipher is"+str(hex(int(ofb_cipher,base=2)).upper())+"\n")
-    print("ofb_plain is",hex(int(ofb_plain,base=2)).upper())
+def show(args):
+    plain,key,iv = rw.read(args)
+    mode = args.mode
+    if mode =="all":
+        ecb_cipher = ECB(plain,key)
+        ecb_plain = ECB(ecb_cipher,key,0)
+        print("ecb_cipher is",hex(int(ecb_cipher,base=2)).upper())
+        ctf.words.append("ecb_cipher is"+str(hex(int(ecb_cipher,base=2)).upper())+"\n")
+        print("ecb_plain  is",hex(int(ecb_plain,base=2)).upper()) 
+        cbc_cipher = CBC(plain,key,iv)
+        cbc_plain = de_CBC(cbc_cipher,key,iv)
+        print("cbc_cipher is",hex(int(cbc_cipher,base=2)).upper())
+        ctf.words.append("cbc_cipher is"+str(hex(int(cbc_cipher,base=2)).upper())+"\n")
+        print("cbc_plain is",hex(int(cbc_plain,base=2)).upper())
+        cfb_cipher = CFB(plain,key,iv)
+        cfb_plain =  CFB(cfb_cipher,key,iv)
+        print("cfb_cipher is",hex(int(cfb_cipher,base=2)).upper())
+        ctf.words.append("cfb_cipher is"+str(hex(int(cfb_cipher,base=2)).upper())+"\n")
+        print("cfb_plain is",hex(int(cfb_plain,base=2)).upper()) 
+        ofb_cipher=OFB(plain,key,iv)
+        ofb_plain=OFB(ofb_cipher,key,iv)
+        print("ofb_cipher is",hex(int(ofb_cipher,base=2)).upper())
+        ctf.words.append("ofb_cipher is"+str(hex(int(ofb_cipher,base=2)).upper())+"\n")
+        print("ofb_plain is",hex(int(ofb_plain,base=2)).upper())
+    elif mode == "ECB":
+        ecb_cipher = ECB(plain,key)
+        ecb_plain = ECB(ecb_cipher,key,0)
+        print("ecb_cipher is",hex(int(ecb_cipher,base=2)).upper())
+        ctf.words.append("ecb_cipher is"+str(hex(int(ecb_cipher,base=2)).upper())+"\n")
+        print("ecb_plain  is",hex(int(ecb_plain,base=2)).upper()) 
+    elif mode == "CBC":
+        cbc_cipher = CBC(plain,key,iv)
+        cbc_plain = de_CBC(cbc_cipher,key,iv)
+        print("cbc_cipher is",hex(int(cbc_cipher,base=2)).upper())
+        ctf.words.append("cbc_cipher is"+str(hex(int(cbc_cipher,base=2)).upper())+"\n")
+        print("cbc_plain is",hex(int(cbc_plain,base=2)).upper())
+    elif mode == "CFB":
+        cfb_cipher = CFB(plain,key,iv)
+        cfb_plain =  CFB(cfb_cipher,key,iv)
+        print("cfb_cipher is",hex(int(cfb_cipher,base=2)).upper())
+        ctf.words.append("cfb_cipher is"+str(hex(int(cfb_cipher,base=2)).upper())+"\n")
+        print("cfb_plain is",hex(int(cfb_plain,base=2)).upper()) 
+    elif mode == "OFB": 
+        ofb_cipher=OFB(plain,key,iv)
+        ofb_plain=OFB(ofb_cipher,key,iv)
+        print("ofb_cipher is",hex(int(ofb_cipher,base=2)).upper())
+        ctf.words.append("ofb_cipher is"+str(hex(int(ofb_cipher,base=2)).upper())+"\n")
+        print("ofb_plain is",hex(int(ofb_plain,base=2)).upper())
+    else: print("please input right modes")
     #rw.write()将print的内容写入对应文件
     
-def test_ECB():
-    plain,key,iv = rw.read()
+def test_ECB(args):
+    plain,key,iv = rw.read(args)
     readname = "b.txt"
     writename = "temp.txt"
     de_name = "detemp.txt" 
@@ -168,8 +196,8 @@ def test_ECB():
 
 
 
-def test_CBC():
-    plain,key,iv = rw.read()
+def test_CBC(args):
+    plain,key,iv = rw.read(args)
     readname = "b.txt"
     writename = "temp.txt"
     perplain = "1"
@@ -194,8 +222,8 @@ def test_CBC():
     print("over")
 
 
-def test_CFB():
-    plain,key,iv = rw.read()
+def test_CFB(args):
+    plain,key,iv = rw.read(args)
     readname = "b.txt"
     writename = "temp.txt"
     perplain = "1"
@@ -219,8 +247,8 @@ def test_CFB():
         f.write("50MB en_decode for 50 times by CFB costs "+str((end-start)*100*50)+"ms\n")
     print("over")
 
-def test_OFB():
-    plain,key,iv = rw.read()
+def test_OFB(args):
+    plain,key,iv = rw.read(args)
     readname = "b.txt"
     writename = "temp.txt"
     perplain = "1"
@@ -246,13 +274,21 @@ def test_OFB():
     print("over")
 
 def test():
-    test_ECB()
-    test_CBC()
-    test_CFB()
-    test_OFB()
+    args = rw.input_settings()
+    test_ECB(args)
+    test_CBC(args)
+    test_CFB(args)
+    test_OFB(args)
+
+
 
 if __name__ == "__main__":
-    show()#规定明文密钥和不同加密模式下的模式
+    args = rw.input_settings()
+    show(args)
+    
+
+
+    #show()#规定明文密钥和不同加密模式下的模式
     #test()测试不同加解密模式的时间，50MB加解密50次
     '''
     plain=plain[:64]
