@@ -36,7 +36,7 @@ def input_settings():
     parse.add_argument("-p",type = str ,dest='plain',help= "- p plain.txt default des_plain.txt",default="des_plain.txt")
     parse.add_argument("-k", type = str ,dest= 'key', help = "-k key.txt default des_key.txt", default="des_key.txt")
     parse.add_argument("-v",type = str ,dest= 'iv', help= "- v iv.txt default des_plain.txt",default="des_iv.txt")
-    parse.add_argument("-m", type = str , dest='mode',help = "-m mode yoeu want to encode default ECB", default="all")
+    parse.add_argument("-m", type = str , dest='mode',help = "-m mode yoeu want to encode default all mode", default="all")
     parse.add_argument("-c", type = str , dest = 'cipher',help = "-c where you want to store the secrect", default="des_Cipher.txt")
     args = parse.parse_args()
     return args

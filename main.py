@@ -285,10 +285,6 @@ def test():
 if __name__ == "__main__":
     args = rw.input_settings()
     show(args)
-    
-
-
-    #show()#规定明文密钥和不同加密模式下的模式
     #test()测试不同加解密模式的时间，50MB加解密50次
     '''
     plain=plain[:64]
